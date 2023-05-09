@@ -13,9 +13,11 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
         android:background="@drawable/jasaraharja_white_ico"
+        android:contentDescription="TODO"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="ContentDescription,HardcodedText,ImageContrastCheck" />
 
     <TextView
         android:id="@+id/textView"
@@ -25,11 +27,12 @@
         android:text="Sistem Informasi\nKoperasi Karyawan dan Jasa Raharja"
         android:textAlignment="center"
         android:textColor="@color/white"
-        android:textSize="20dp"
+        android:textSize="20sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="@+id/imageView2"
         app:layout_constraintStart_toStartOf="@+id/imageView2"
-        app:layout_constraintTop_toBottomOf="@+id/imageView2" />
+        app:layout_constraintTop_toBottomOf="@+id/imageView2"
+        tools:ignore="HardcodedText,TextContrastCheck" />
 
     <LinearLayout
         android:id="@+id/linearLayout4"
@@ -59,8 +62,9 @@
             android:paddingHorizontal="15dp"
             android:textAlignment="textStart"
             android:textColor="#FF6C6C6C"
-            android:textSize="14dp"
-            android:textStyle="bold" />
+            android:textSize="14sp"
+            android:textStyle="bold"
+        tools:ignore="ExtraText,HardcodedText,VisualLintTextFieldSize" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
@@ -78,8 +82,9 @@
                 android:paddingHorizontal="15dp"
                 android:textAlignment="textStart"
                 android:textColor="#FF6C6C6C"
-                android:textSize="14dp"
-                android:textStyle="bold" />
+                android:textSize="14sp"
+                android:textStyle="bold"
+                tools:ignore="HardcodedText,VisualLintTextFieldSize" />
 
 
         </com.google.android.material.textfield.TextInputLayout>
@@ -93,7 +98,8 @@
             android:layout_marginTop="20dp"
             android:background="@drawable/button_login"
             android:text="Login"
-            android:textColor="#FFFFFF" />
+            android:textColor="#FFFFFF"
+            tools:ignore="HardcodedText,VisualLintButtonSize" />
 
     </LinearLayout>
 

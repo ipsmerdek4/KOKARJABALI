@@ -50,6 +50,7 @@
 
 
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/txt_username"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="20dp"
@@ -64,7 +65,7 @@
             android:textColor="#FF6C6C6C"
             android:textSize="14sp"
             android:textStyle="bold"
-        tools:ignore="ExtraText,HardcodedText,VisualLintTextFieldSize" />
+            tools:ignore="ExtraText,HardcodedText,VisualLintTextFieldSize" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
@@ -74,6 +75,7 @@
             app:passwordToggleEnabled="true">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/txt_pass"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/edit_text_login"

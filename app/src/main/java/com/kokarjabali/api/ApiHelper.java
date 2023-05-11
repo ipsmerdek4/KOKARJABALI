@@ -1,18 +1,12 @@
-package com.kokarjabali;
+package com.kokarjabali.api;
 
 import android.content.Context;
-import android.widget.Toast;
 
-import com.android.volley.AuthFailureError;
-import com.android.volley.NetworkError;
 import com.android.volley.NetworkResponse;
-import com.android.volley.NoConnectionError;
-import com.android.volley.ParseError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.ServerError;
-import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.HttpHeaderParser;
 import com.android.volley.toolbox.StringRequest;
@@ -43,14 +37,14 @@ public class ApiHelper {
                         callback.onSuccess(newrespon);
 
 
-                        try {
-                            JSONObject jsonObject = new JSONObject(response);
-
-
-
-                        } catch (JSONException e) {
-                            throw new RuntimeException(e);
-                        }
+//                        try {
+//                            JSONObject jsonObject = new JSONObject(response);
+//
+//
+//
+//                        } catch (JSONException e) {
+//                            throw new RuntimeException(e);
+//                        }
 
 
 

@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/background_login"
-    tools:context=".LoginActivity">
+    tools:context=".ui.LoginActivity">
 
     <ImageView
         android:id="@+id/imageView2"
@@ -80,7 +80,7 @@
                 android:layout_height="wrap_content"
                 android:background="@drawable/edit_text_login"
                 android:hint="Password"
-                android:inputType="text"
+                android:inputType="textPassword"
                 android:paddingHorizontal="15dp"
                 android:textAlignment="textStart"
                 android:textColor="#FF6C6C6C"

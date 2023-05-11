@@ -27,11 +27,11 @@
             android:exported="false"
             tools:ignore="LockedOrientationActivity" />
         <activity
-            android:name=".ui.LoginActivity"
+            android:name=".ui.PengajuanPinjamanActivity"
             android:exported="false"
             tools:ignore="LockedOrientationActivity" />
         <activity
-            android:name=".ui.PengajuanPinjamanActivity"
+            android:name=".ui.LoginActivity"
             android:exported="true"
             tools:ignore="LockedOrientationActivity">
             <intent-filter>

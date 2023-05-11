@@ -30,11 +30,20 @@ public class ApiHelper {
                     @Override
                     public void onResponse(String response) {
 
-                        String[] newrespon = new String[2];
-                        newrespon[0] = response;
+                        try {
+                            JSONObject jsonObject = new JSONObject(response);
+
+                            String[] newrespon = new String[2];
+                            newrespon[0] = jsonObject.getString("id");
 //                            newrespon[1] = jsonObject.getString("massage");
 
-                        callback.onSuccess(newrespon);
+                            callback.onSuccess(newrespon);
+
+                        } catch (JSONException e) {
+                            throw new RuntimeException(e);
+                        }
+
+
 
 
 //                        try {

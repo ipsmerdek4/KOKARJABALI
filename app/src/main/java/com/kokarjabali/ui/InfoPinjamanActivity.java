@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.view.WindowManager;
+import android.widget.Toast;
 
 import com.kokarjabali.R;
 
@@ -19,6 +20,10 @@ public class InfoPinjamanActivity extends AppCompatActivity {
 
 
 
+        Bundle DataX = getIntent().getExtras();
+        String id_user = DataX.getString("id_user");
+
+        Toast.makeText(this, id_user, Toast.LENGTH_SHORT).show();
 
     }
 }

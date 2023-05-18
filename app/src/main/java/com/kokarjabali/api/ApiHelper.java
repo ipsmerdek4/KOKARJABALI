@@ -33,9 +33,13 @@ public class ApiHelper {
                         try {
                             JSONObject jsonObject = new JSONObject(response);
 
-                            String[] newrespon = new String[2];
+                            String[] newrespon = new String[6];
                             newrespon[0] = jsonObject.getString("id");
-//                            newrespon[1] = jsonObject.getString("massage");
+                            newrespon[1] = jsonObject.getString("nama");
+                            newrespon[2] = jsonObject.getString("saldo_awal");
+                            newrespon[3] = jsonObject.getString("saldo_akhir");
+                            newrespon[4] = jsonObject.getString("wilker");
+                            newrespon[5] = jsonObject.getString("tgl_gabung");
 
                             callback.onSuccess(newrespon);
 
@@ -43,34 +47,6 @@ public class ApiHelper {
                             throw new RuntimeException(e);
                         }
 
-
-
-
-//                        try {
-//                            JSONObject jsonObject = new JSONObject(response);
-//
-//
-//
-//                        } catch (JSONException e) {
-//                            throw new RuntimeException(e);
-//                        }
-
-
-
-//                        Toast.makeText(context, response, Toast.LENGTH_SHORT).show();
-//
-//                        try {
-//                            JSONObject jsonObject = new JSONObject(response);
-//
-//                            String[] newrespon = new String[2];
-//                            newrespon[0] = jsonObject.getString("error");
-//                            newrespon[1] = jsonObject.getString("massage");
-//
-////                            callback.onSuccess(newrespon);
-//
-//                        } catch (JSONException e) {
-////                            callback.onError("error : " + e.toString());
-//                        }
                     }
                 }, new Response.ErrorListener() {
             @Override

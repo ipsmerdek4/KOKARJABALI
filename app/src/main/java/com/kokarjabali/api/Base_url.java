@@ -3,7 +3,7 @@ package com.kokarjabali.api;
 public class Base_url {
 
     public String uri(){
-        return "http://192.168.29.2/sikoperasi/";
+        return "http://10.10.10.6/sikoperasi/";
     }
 
 }

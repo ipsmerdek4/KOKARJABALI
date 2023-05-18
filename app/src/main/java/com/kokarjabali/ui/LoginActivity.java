@@ -2,6 +2,8 @@ package com.kokarjabali.ui;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -22,6 +24,15 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+
+        SharedPreferences data_log = getSharedPreferences("login", MODE_PRIVATE);
+
+        if (data_log.getBoolean("logged_in", false) != false){
+            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+            startActivity(intent);
+            finish();
+        }
 
 
         Button Login = findViewById(R.id.button);
@@ -45,12 +56,31 @@ public class LoginActivity extends AppCompatActivity {
                         new ApiHelper.VolleyCallback() {
                             @Override
                             public void onSuccess(String[] result) {
-                                Toast.makeText(LoginActivity.this, result[0], Toast.LENGTH_SHORT).show();
+                                String id = result[0];
+                                String nama = result[1];
+                                String saldo_awal = result[2];
+                                String saldo_akhir = result[3];
+                                String wilker = result[4];
+                                String tgl_gabung = result[5];
+
+                                SharedPreferences.Editor editor = data_log.edit();
+                                editor.putBoolean("logged_in", true);
+                                editor.putString("id", id);
+                                editor.putString("nama", nama);
+                                editor.putString("saldo_awal", saldo_awal);
+                                editor.putString("saldo_akhir", saldo_akhir);
+                                editor.putString("wilker", wilker);
+                                editor.putString("tgl_gabung", tgl_gabung);
+                                editor.apply();
+
+                                Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                                startActivity(intent);
+                                finish();
                             }
 
                             @Override
                             public void onError(String result) {
-                                Toast.makeText(LoginActivity.this, result, Toast.LENGTH_SHORT).show();
+                                Toast.makeText(LoginActivity.this, "Error : "  + result, Toast.LENGTH_SHORT).show();
                             }
                         }
                 );

@@ -205,8 +205,6 @@ public class ApiHelper {
 
 
 
-
-
     public void PINJAMAN_GET(Context context, String url, final ApiHelper.VolleyCallback callback) {
 
 
@@ -291,6 +289,59 @@ public class ApiHelper {
     }
 
 
+
+
+    public void Notifikasi_Auto_Debit_GET(Context context, String url, final ApiHelper.VolleyCallback callback) {
+
+
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+
+                        try {
+                            JSONObject jsonObject = new JSONObject(response);
+
+                            String[] newrespon = new String[6];
+                            newrespon[0] = jsonObject.getString("message");
+
+                            callback.onSuccess(newrespon);
+
+                        } catch (JSONException e) {
+//                            throw new RuntimeException(e);
+                        }
+
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+                // As of f605da3 the following should work
+                NetworkResponse response = error.networkResponse;
+                if (error instanceof ServerError && response != null) {
+                    try {
+                        String res = new String(response.data,
+                                HttpHeaderParser.parseCharset(response.headers, "utf-8"));
+                        // Now you can use any deserializer to make sense of data
+                        JSONObject obj = new JSONObject(res);
+
+//                        callback.onError(String.valueOf(obj.getString("message")));
+
+                    } catch (UnsupportedEncodingException e1) {
+                        // Couldn't properly decode data to string
+                        e1.printStackTrace();
+                    } catch (JSONException e2) {
+                        // returned data is not JSONObject?
+                        e2.printStackTrace();
+                    }
+                }
+
+            }
+        });
+
+        RequestQueue requestQueue = Volley.newRequestQueue(context);
+        requestQueue.add(stringRequest);
+    }
 
 
 

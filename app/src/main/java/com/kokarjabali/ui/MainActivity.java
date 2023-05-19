@@ -3,11 +3,13 @@ package com.kokarjabali.ui;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
+import android.app.Dialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.TextView;
@@ -16,6 +18,8 @@ import android.widget.Toast;
 import com.kokarjabali.api.ApiHelper;
 import com.kokarjabali.R;
 import com.kokarjabali.api.Base_url;
+
+import org.w3c.dom.Text;
 
 import java.text.NumberFormat;
 import java.text.ParseException;
@@ -77,20 +81,6 @@ public class MainActivity extends AppCompatActivity {
         gabungV.setText("Bergabung Sejak " + dateTime);
 
 
-        Button Keluar = findViewById(R.id.button6);
-        Keluar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                SharedPreferences.Editor editor = data_log.edit();
-                editor.clear().apply();
-
-                Intent intent = new Intent(MainActivity.this, LoginActivity.class);
-                startActivity(intent);
-                finish();
-            }
-        });
-
 
         Button info = findViewById(R.id.button5);
         info.setOnClickListener(new View.OnClickListener() {
@@ -130,99 +120,161 @@ public class MainActivity extends AppCompatActivity {
 
 
         //*********************************************************************************
+//
+//        api_call.PINJAMAN_GET(
+//                MainActivity.this,
+//                base_url.uri() + "api/pinjaman?user_id=" + data_log.getString("id", "null"),
+//                new ApiHelper.VolleyCallback() {
+//                    @Override
+//                    public void onSuccess(String[] result) {
+//
+//                        String[] pecah_tgl_server = result[10].split("-");
+//                        String jngkawaktu = result[11];
+//
+//                        Calendar calendar = Calendar.getInstance();
+//                        int year = calendar.get(Calendar.YEAR);
+//                        int mounts = calendar.get(Calendar.MONTH) + 1;
+//                        int days = calendar.get(Calendar.DAY_OF_MONTH);
+//
+//                        for (int i = 1; i <= Integer.parseInt(jngkawaktu); i++) {
+//                            Calendar calendar_db = Calendar.getInstance();
+//                            calendar_db.set(Calendar.MONTH, Integer.parseInt(pecah_tgl_server[1]));
+//                            calendar_db.set(Calendar.YEAR, Integer.parseInt(pecah_tgl_server[0]));
+//                            calendar_db.set(Calendar.DAY_OF_MONTH,  Integer.parseInt(pecah_tgl_server[2]));
+//                            calendar_db.add(Calendar.MONTH, i-1);
+//
+//                            SimpleDateFormat f_tgl_db = new SimpleDateFormat("dd");
+//                            SimpleDateFormat f_bulan_db = new SimpleDateFormat("MM");
+//                            SimpleDateFormat f_tahun_db = new SimpleDateFormat("yyyy");
+//
+//                            String tgl_db = f_tgl_db.format(calendar_db.getTime());
+//                            String bulan_db = f_bulan_db.format(calendar_db.getTime());
+//                            String tahun_db = f_tahun_db.format(calendar_db.getTime());
+//
+//                            for (int j = 1; j <= 7; j++) {
+//                                Calendar calendar_db_day = Calendar.getInstance();
+//                                calendar_db_day.set(Calendar.MONTH, Integer.parseInt(bulan_db));
+//                                calendar_db_day.set(Calendar.YEAR, Integer.parseInt(tahun_db));
+//                                calendar_db_day.set(Calendar.DAY_OF_MONTH, Integer.parseInt(tgl_db));
+//                                calendar_db_day.add(Calendar.DAY_OF_MONTH, -j);
+//
+//                                SimpleDateFormat f_tgl_db_day = new SimpleDateFormat("dd");
+////                                SimpleDateFormat f_bulan_db_day = new SimpleDateFormat("MM");
+////                                SimpleDateFormat f_tahun_db_day = new SimpleDateFormat("yyyy");
+//
+//                                int tgl_db_day = Integer.parseInt(f_tgl_db_day.format(calendar_db_day.getTime()));
+//                                int bulan_db_day = Integer.parseInt(bulan_db);
+//                                int tahun_db_day = Integer.parseInt(tahun_db);
+//
+//                                if (tgl_db_day == days & bulan_db_day == mounts & tahun_db_day == year ) {
+//
+//                                        //tampilkan dialog disini
+////                                        Log.d("tes", String.valueOf(tgl_db_day));
+//
+//
+//                                }
+//                            }
+//
+//
+//
+//                        }
+//
+//
+//
+//
+////                        @SuppressLint("SimpleDateFormat")
+////                        SimpleDateFormat format = new SimpleDateFormat("EEE MMM d HH:mm:ss zzz yyyy");
+////                        SimpleDateFormat formatedate = new SimpleDateFormat("dd-MMMM-yyyy HH:mm:ss");
+////                        Date date_db_n;
+////                        String dateTime_db_n;
+////                        try {
+////                            date_db_n  = format.parse(date_server);
+////                            dateTime_db_n = formatedate.format(date_db_n);
+////
+////                        } catch (ParseException e) {
+////                            throw new RuntimeException(e);
+////                        }
+//
+////                        int date_server_nn = Integer.parseInt(dateTime_db_n);
+//
+////                        int date_time_now = (int) (new Date().getTime()/1000);
+//
+//                    }
+//
+//                    @Override
+//                    public void onError(String result) {
+//                        Toast.makeText(MainActivity.this, "Error " + result , Toast.LENGTH_SHORT).show();
+//                    }
+//                });
 
-        api_call.PINJAMAN_GET(
+
+
+
+        //*********************************************************************
+
+        api_call.Notifikasi_Auto_Debit_GET(
                 MainActivity.this,
-                base_url.uri() + "api/pinjaman?user_id=" + data_log.getString("id", "null"),
+                base_url.uri() + "/api/pinjaman/notifikasi?user_id=" + data_log.getString("id", "null"),
                 new ApiHelper.VolleyCallback() {
                     @Override
                     public void onSuccess(String[] result) {
+                        if (result[0].equals("")){
+//                            Toast.makeText(MainActivity.this, "KOSONG", Toast.LENGTH_SHORT).show();
+                        }else {
 
-                        String[] pecah_tgl_server = result[10].split("-");
-                        String jngkawaktu = result[11];
+                            //dialog
+                            Dialog dialog = new Dialog(MainActivity.this);
+                            dialog.setContentView(R.layout.costume_dialog_1);
+                            dialog.getWindow().setBackgroundDrawable(getResources().getDrawable(R.drawable.backgroud_dialog));
+                            dialog.getWindow().setLayout(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                            dialog.setCancelable(false);
+                            dialog.getWindow().getAttributes().windowAnimations = R.style.animation;
 
-                        Calendar calendar = Calendar.getInstance();
-                        int year = calendar.get(Calendar.YEAR);
-                        int mounts = calendar.get(Calendar.MONTH) + 1;
-                        int days = calendar.get(Calendar.DAY_OF_MONTH);
+                            dialog.show();
 
-                        for (int i = 1; i <= Integer.parseInt(jngkawaktu); i++) {
-                            Calendar calendar_db = Calendar.getInstance();
-                            calendar_db.set(Calendar.MONTH, Integer.parseInt(pecah_tgl_server[1]));
-                            calendar_db.set(Calendar.YEAR, Integer.parseInt(pecah_tgl_server[0]));
-                            calendar_db.set(Calendar.DAY_OF_MONTH,  Integer.parseInt(pecah_tgl_server[2]));
-                            calendar_db.add(Calendar.MONTH, i-1);
+                            TextView viewtext = dialog.findViewById(R.id.textView);
+                            viewtext.setText(result[0]);
 
-                            SimpleDateFormat f_tgl_db = new SimpleDateFormat("dd");
-                            SimpleDateFormat f_bulan_db = new SimpleDateFormat("MM");
-                            SimpleDateFormat f_tahun_db = new SimpleDateFormat("yyyy");
-
-                            String tgl_db = f_tgl_db.format(calendar_db.getTime());
-                            String bulan_db = f_bulan_db.format(calendar_db.getTime());
-                            String tahun_db = f_tahun_db.format(calendar_db.getTime());
-
-                            for (int j = 1; j <= 7; j++) {
-                                Calendar calendar_db_day = Calendar.getInstance();
-                                calendar_db_day.set(Calendar.MONTH, Integer.parseInt(bulan_db));
-                                calendar_db_day.set(Calendar.YEAR, Integer.parseInt(tahun_db));
-                                calendar_db_day.set(Calendar.DAY_OF_MONTH, Integer.parseInt(tgl_db));
-                                calendar_db_day.add(Calendar.DAY_OF_MONTH, -j);
-
-                                SimpleDateFormat f_tgl_db_day = new SimpleDateFormat("dd");
-//                                SimpleDateFormat f_bulan_db_day = new SimpleDateFormat("MM");
-//                                SimpleDateFormat f_tahun_db_day = new SimpleDateFormat("yyyy");
-
-                                int tgl_db_day = Integer.parseInt(f_tgl_db_day.format(calendar_db_day.getTime()));
-                                int bulan_db_day = Integer.parseInt(bulan_db);
-                                int tahun_db_day = Integer.parseInt(tahun_db);
-
-                                if (tgl_db_day == days & bulan_db_day == mounts & tahun_db_day == year ) {
-
-                                        //tampilkan dialog disini
-//                                        Log.d("tes", String.valueOf(tgl_db_day));
-
-
-
-
-
-
+                            Button tutup = dialog.findViewById(R.id.btn_cancel);
+                            tutup.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    dialog.dismiss();
 
                                 }
-                            }
+                            });
 
 
-
+//                            Toast.makeText(MainActivity.this, result[0], Toast.LENGTH_SHORT).show();
                         }
-
-
-
-
-//                        @SuppressLint("SimpleDateFormat")
-//                        SimpleDateFormat format = new SimpleDateFormat("EEE MMM d HH:mm:ss zzz yyyy");
-//                        SimpleDateFormat formatedate = new SimpleDateFormat("dd-MMMM-yyyy HH:mm:ss");
-//                        Date date_db_n;
-//                        String dateTime_db_n;
-//                        try {
-//                            date_db_n  = format.parse(date_server);
-//                            dateTime_db_n = formatedate.format(date_db_n);
-//
-//                        } catch (ParseException e) {
-//                            throw new RuntimeException(e);
-//                        }
-
-//                        int date_server_nn = Integer.parseInt(dateTime_db_n);
-
-//                        int date_time_now = (int) (new Date().getTime()/1000);
-
                     }
 
                     @Override
                     public void onError(String result) {
-                        Toast.makeText(MainActivity.this, "Error " + result , Toast.LENGTH_SHORT).show();
+
                     }
-                });
+                }
+
+        );
 
 
+
+        //*********************************************************
+
+
+        Button Keluar = findViewById(R.id.button6);
+        Keluar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                SharedPreferences.Editor editor = data_log.edit();
+                editor.clear().apply();
+
+                Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        });
 
 
 

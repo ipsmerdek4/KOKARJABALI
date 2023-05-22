@@ -216,27 +216,38 @@ public class ApiHelper {
                         try {
                             JSONArray jsonarray = new JSONArray(response);
 
-                            for(int i=0; i < jsonarray.length();i++) {
 
-                                if (i == (jsonarray.length()-1)) {
-                                    JSONObject jsonObject = new JSONObject(jsonarray.getString(i));
 
-                                    String[] newrespon = new String[12];
-                                    newrespon[0] = jsonObject.getString("id");
-                                    newrespon[1] = jsonObject.getString("formatted_pokok_pinj");
-                                    newrespon[2] = jsonObject.getString("formatted_jangka_waktu");
-                                    newrespon[3] = jsonObject.getString("bunga_persen");
-                                    newrespon[4] = jsonObject.getString("formatted_jmlh_pinj");
-                                    newrespon[5] = jsonObject.getString("formatted_angsuran");
-                                    newrespon[6] = jsonObject.getString("formatted_tgl_pinj");
-                                    newrespon[7] = jsonObject.getString("formatted_tgl_jatuh_tempo");
-                                    newrespon[8] = jsonObject.getString("cicilan_ke");
-                                    newrespon[9] = jsonObject.getString("formatted_sisa_pinj");
-                                    newrespon[10] = jsonObject.getString("tgl_pinj");
-                                    newrespon[11] = jsonObject.getString("jangka_waktu");
-                                    callback.onSuccess(newrespon );
+                            if (jsonarray.length() == 0) {
+                                String[] newrespon = new String[14];
+                                newrespon[12] = "0";
+                                callback.onSuccess(newrespon );
+                            }else{
+                                for(int i=0; i < jsonarray.length();i++) {
+                                    if (i == (jsonarray.length()-1)) {
+                                        JSONObject jsonObject = new JSONObject(jsonarray.getString(i));
+
+                                        String[] newrespon = new String[14];
+                                        newrespon[0] = jsonObject.getString("id");
+                                        newrespon[1] = jsonObject.getString("formatted_pokok_pinj");
+                                        newrespon[2] = jsonObject.getString("formatted_jangka_waktu");
+                                        newrespon[3] = jsonObject.getString("bunga_persen");
+                                        newrespon[4] = jsonObject.getString("formatted_jmlh_pinj");
+                                        newrespon[5] = jsonObject.getString("formatted_angsuran");
+                                        newrespon[6] = jsonObject.getString("formatted_tgl_pinj");
+                                        newrespon[7] = jsonObject.getString("formatted_tgl_jatuh_tempo");
+                                        newrespon[8] = jsonObject.getString("cicilan_ke");
+                                        newrespon[9] = jsonObject.getString("formatted_sisa_pinj");
+                                        newrespon[10] = jsonObject.getString("tgl_pinj");
+                                        newrespon[11] = jsonObject.getString("jangka_waktu");
+                                        newrespon[12] = "1";
+                                        newrespon[13] = jsonObject.getString("status");
+
+                                        callback.onSuccess(newrespon );
+                                    }
                                 }
                             }
+
 
                         } catch (JSONException e) {
                             throw new RuntimeException(e);

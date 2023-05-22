@@ -40,38 +40,36 @@ public class InfoPinjamanActivity extends AppCompatActivity {
                 new ApiHelper.VolleyCallback() {
                     @Override
                     public void onSuccess(String[] result) {
-//                        Toast.makeText(InfoPinjamanActivity.this, String.valueOf(result[0]), Toast.LENGTH_SHORT).show();
 
-                        TextView nama = findViewById(R.id.textView11);
-                        nama.setText(DataX.getString("nama"));
+                                TextView nama = findViewById(R.id.textView11);
+                                nama.setText(DataX.getString("nama"));
 
-                        TextView pokok = findViewById(R.id.textView13);
-                        pokok.setText(result[1]);
+                                TextView pokok = findViewById(R.id.textView13);
+                                pokok.setText(result[1]);
 
-                        TextView jangkawaktu = findViewById(R.id.textView14);
-                        jangkawaktu.setText(result[2]);
+                                TextView jangkawaktu = findViewById(R.id.textView14);
+                                jangkawaktu.setText(result[2]);
 
-                        TextView bunga = findViewById(R.id.textView15);
-                        bunga.setText(result[3]);
+                                TextView bunga = findViewById(R.id.textView15);
+                                bunga.setText(result[3]);
 
-                        TextView jmlpinjaman = findViewById(R.id.textView16);
-                        jmlpinjaman.setText(result[4]);
+                                TextView jmlpinjaman = findViewById(R.id.textView16);
+                                jmlpinjaman.setText(result[4]);
 
-                        TextView cicilanbulan = findViewById(R.id.textView17);
-                        cicilanbulan.setText(result[5]);
+                                TextView cicilanbulan = findViewById(R.id.textView17);
+                                cicilanbulan.setText(result[5]);
 
-                        TextView tglpinjam = findViewById(R.id.textView18);
-                        tglpinjam.setText(result[6]);
+                                TextView tglpinjam = findViewById(R.id.textView18);
+                                tglpinjam.setText(result[6]);
 
-                        TextView jatuhtempo = findViewById(R.id.textView19);
-                        jatuhtempo.setText(result[7]);
+                                TextView jatuhtempo = findViewById(R.id.textView19);
+                                jatuhtempo.setText(result[7]);
 
-                        TextView cicilanke = findViewById(R.id.textView20);
-                        cicilanke.setText(result[8]);
+                                TextView cicilanke = findViewById(R.id.textView20);
+                                cicilanke.setText(result[8]);
 
-                        TextView sisapinjam = findViewById(R.id.textView21);
-                        sisapinjam.setText(result[9]);
-
+                                TextView sisapinjam = findViewById(R.id.textView21);
+                                sisapinjam.setText(result[9]);
 
                     }
 

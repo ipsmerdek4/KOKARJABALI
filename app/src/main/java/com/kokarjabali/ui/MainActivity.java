@@ -87,11 +87,94 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                Intent intent = new Intent(MainActivity.this, InfoPinjamanActivity.class);
-                intent.putExtra("id_user", data_log.getString("id", "null"));
-                intent.putExtra("nama", data_log.getString("nama", "null"));
-                startActivity(intent);
-                finish();
+                api_call.PINJAMAN_GET(
+                        MainActivity.this,
+                        base_url.uri() + "api/pinjaman?user_id=" + data_log.getString("id", "null"),
+                        new ApiHelper.VolleyCallback() {
+                            @Override
+                            public void onSuccess(String[] result) {
+
+                                //dialog
+                                Dialog dialog = new Dialog(MainActivity.this);
+                                dialog.setContentView(R.layout.costume_dialog_1);
+                                dialog.getWindow().setBackgroundDrawable(getResources().getDrawable(R.drawable.backgroud_dialog));
+                                dialog.getWindow().setLayout(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                                dialog.setCancelable(false);
+                                dialog.getWindow().getAttributes().windowAnimations = R.style.animation;
+
+
+                                if (result[12].equals("0")){
+                                    Toast.makeText(MainActivity.this, "" , Toast.LENGTH_SHORT).show();
+
+//                                    dialog.show();
+//
+//                                    TextView viewtext = dialog.findViewById(R.id.textView);
+//                                    viewtext.setText("Anda Belum Memiliki Pinjaman");
+//
+//                                    Button tutup = dialog.findViewById(R.id.btn_cancel);
+//                                    tutup.setOnClickListener(new View.OnClickListener() {
+//                                        @Override
+//                                        public void onClick(View v) {
+//                                            dialog.dismiss();
+//
+//                                        }
+//                                    });
+
+                                }else{
+                                    if (result[13].equals("MENUNGGU VALIDASI SEKRETARIS")) {
+                                        Toast.makeText(MainActivity.this, "MENUNGGU VALIDASI SEKRETARIS.", Toast.LENGTH_SHORT).show();
+
+//                                        dialog.show();
+//
+//                                        TextView viewtext = dialog.findViewById(R.id.textView);
+//                                        viewtext.setText("MENUNGGU VALIDASI SEKRETARIS.");
+//
+//
+//                                        Button tutup = dialog.findViewById(R.id.btn_cancel);
+//                                        tutup.setOnClickListener(new View.OnClickListener() {
+//                                            @Override
+//                                            public void onClick(View v) {
+//                                                dialog.dismiss();
+//
+//                                            }
+//                                        });
+                                    } else if (result[13].equals("MENUNGGU VALIDASI KETUA")) {
+                                        Toast.makeText(MainActivity.this, "MENUNGGU VALIDASI KETUA.", Toast.LENGTH_SHORT).show();
+//                                        dialog.show();
+//
+//                                        TextView viewtext = dialog.findViewById(R.id.textView);
+//                                        viewtext.setText("MENUNGGU VALIDASI KETUA.");
+//                                        viewtext.setPadding(70,150,70,150);
+//                                        viewtext.setTextSize(24);
+//
+//                                        Button tutup = dialog.findViewById(R.id.btn_cancel);
+//                                        tutup.setOnClickListener(new View.OnClickListener() {
+//                                            @Override
+//                                            public void onClick(View v) {
+//                                                dialog.dismiss();
+//
+//                                            }
+//                                        });
+                                    }else {
+
+                                        Intent intent = new Intent(MainActivity.this, InfoPinjamanActivity.class);
+                                        intent.putExtra("id_user", data_log.getString("id", "null"));
+                                        intent.putExtra("nama", data_log.getString("nama", "null"));
+                                        startActivity(intent);
+                                        finish();
+
+                                    }
+                                }
+
+                            }
+
+                            @Override
+                            public void onError(String result) {
+                                Toast.makeText(MainActivity.this, "Error " + result , Toast.LENGTH_SHORT).show();
+
+                            }
+                        });
+
 
             }
         });

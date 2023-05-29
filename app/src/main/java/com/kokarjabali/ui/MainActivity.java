@@ -104,7 +104,7 @@ public class MainActivity extends AppCompatActivity {
 
 
                                 if (result[12].equals("0")){
-                                    Toast.makeText(MainActivity.this, "" , Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(MainActivity.this, "Anda Tidak Memiliki Pinjaman" , Toast.LENGTH_SHORT).show();
 
 //                                    dialog.show();
 //

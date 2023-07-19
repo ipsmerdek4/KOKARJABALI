@@ -63,22 +63,49 @@ public class MainActivity extends AppCompatActivity {
         TextView cabangV = findViewById(R.id.textView6);
         cabangV.setText("Cabang " + cabang);
 
-        String gabung = data_log.getString("tgl_gabung", "null");
-        @SuppressLint("SimpleDateFormat")
-        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-        SimpleDateFormat formatedate = new SimpleDateFormat("dd MMMM yyyy");
-        Date date;
-        String dateTime;
-        try {
-            date  = format.parse(gabung);
-            dateTime = formatedate.format(date);
+        String gabung = data_log.getString("bergabung_sejak", "null");
+        TextView gabungV = findViewById(R.id.textView7);
+        gabungV.setText(gabung);
 
-        } catch (ParseException e) {
-            throw new RuntimeException(e);
-        }
+        String simpok = data_log.getString("simpanan_pokok", "null");
+        TextView simpokV = findViewById(R.id.textView23);
+        simpokV.setText(simpok);
 
-        TextView gabungV =  findViewById(R.id.textView7);
-        gabungV.setText("Bergabung Sejak " + dateTime);
+        String simjib = data_log.getString("simpanan_wajib", "null");
+        TextView simjibV = findViewById(R.id.textView25);
+        simjibV.setText(simjib);
+
+        String simrela = data_log.getString("simpanan_sukarela", "null");
+        TextView simrelaV = findViewById(R.id.textView27);
+        simrelaV.setText(simrela);
+
+        String no_hp = data_log.getString("no_hp", "null");
+        TextView no_hpV = findViewById(R.id.textView29);
+        no_hpV.setText(no_hp);
+
+        String no_rek = data_log.getString("no_rek", "null");
+        TextView no_rekV = findViewById(R.id.textView31);
+        no_rekV.setText(no_rek);
+
+
+
+
+//        String gabung = data_log.getString("tgl_gabung", "null");
+//        @SuppressLint("SimpleDateFormat")
+//        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+//        SimpleDateFormat formatedate = new SimpleDateFormat("dd MMMM yyyy");
+//        Date date;
+//        String dateTime;
+//        try {
+//            date  = format.parse(gabung);
+//            dateTime = formatedate.format(date);
+//
+//        } catch (ParseException e) {
+//            throw new RuntimeException(e);
+//        }
+//
+//        TextView gabungV =  findViewById(R.id.textView7);
+//        gabungV.setText("Bergabung Sejak " + dateTime);
 
 
 
@@ -181,10 +208,30 @@ public class MainActivity extends AppCompatActivity {
 
 
 
+        Button resetpassword =  findViewById(R.id.button7);
+        resetpassword.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, ResetPasswordActivity.class);
+                intent.putExtra("id_user", data_log.getString("id", "null"));
+                intent.putExtra("nama", data_log.getString("nama", "null"));
+                startActivity(intent);
+                finish();
+            }
+        });
 
 
-
-
+        Button mutasi = findViewById(R.id.button8);
+        mutasi.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, MutasiSaldoActivity.class);
+                intent.putExtra("id_user", data_log.getString("id", "null"));
+                intent.putExtra("nama", data_log.getString("nama", "null"));
+                startActivity(intent);
+                finish();
+            }
+        });
 
 
         Button pengajuan = findViewById(R.id.button4);

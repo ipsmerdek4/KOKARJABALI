@@ -63,7 +63,12 @@ public class LoginActivity extends AppCompatActivity {
                                 String saldo_awal = result[2];
                                 String saldo_akhir = result[3];
                                 String wilker = result[4];
-                                String tgl_gabung = result[5];
+                                String bergabung_sejak = result[5];
+                                String simpanan_pokok = result[6];
+                                String simpanan_wajib = result[7];
+                                String simpanan_sukarela = result[8];
+                                String no_hp = result[9];
+                                String no_rek = result[10];
 
                                 SharedPreferences.Editor editor = data_log.edit();
                                 editor.putBoolean("logged_in", true);
@@ -72,7 +77,12 @@ public class LoginActivity extends AppCompatActivity {
                                 editor.putString("saldo_awal", saldo_awal);
                                 editor.putString("saldo_akhir", saldo_akhir);
                                 editor.putString("wilker", wilker);
-                                editor.putString("tgl_gabung", tgl_gabung);
+                                editor.putString("bergabung_sejak", bergabung_sejak);
+                                editor.putString("simpanan_pokok", simpanan_pokok);
+                                editor.putString("simpanan_wajib", simpanan_wajib);
+                                editor.putString("simpanan_sukarela", simpanan_sukarela);
+                                editor.putString("no_hp", no_hp);
+                                editor.putString("no_rek", no_rek);
                                 editor.apply();
 
                                 Intent intent = new Intent(LoginActivity.this, MainActivity.class);

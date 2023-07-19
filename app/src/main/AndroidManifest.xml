@@ -19,6 +19,12 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+            android:name=".ui.MutasiSaldoActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.ResetPasswordActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.InfoPinjamanActivity"
             android:exported="false"
             tools:ignore="LockedOrientationActivity" />

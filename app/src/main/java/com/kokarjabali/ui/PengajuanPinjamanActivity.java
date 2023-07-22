@@ -1,13 +1,22 @@
 package com.kokarjabali.ui;
 
+import static android.graphics.Color.parseColor;
+
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.text.InputType;
+import android.util.TypedValue;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.LinearLayout;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -16,7 +25,14 @@ import com.kokarjabali.R;
 import com.kokarjabali.api.ApiHelper;
 import com.kokarjabali.api.Base_url;
 
-public class PengajuanPinjamanActivity extends AppCompatActivity {
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class PengajuanPinjamanActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
 
     ApiHelper api_call = new ApiHelper();
@@ -37,18 +53,80 @@ public class PengajuanPinjamanActivity extends AppCompatActivity {
         NAma.setText(DataX.getString("nama"));
 
 
+        final Spinner spinner = (Spinner) findViewById(R.id.spinner);
+        // Spinner click listener
+        spinner.setOnItemSelectedListener(this);
+
+
+
+
+        api_call.JANGKAWAKTU_GET(
+                this,
+                base_url.uri() + "api/pinjaman/jangka-waktu?user_id=" + id_user,
+                new ApiHelper.VolleyCallback() {
+                    @Override
+                    public void onSuccess(String[] result) {
+
+                        // Spinner Drop down elements
+                        List<String> categories = new ArrayList<String>();
+                            categories.add("-- Pilih Tahun Pengajuan --");
+
+                        try {
+                            JSONArray jsonArray = new JSONArray(result[1]);
+                            for (int i = 0; i < jsonArray.length(); i++) {
+                                categories.add(jsonArray.getString(i));
+                            }
+                        } catch (JSONException e) {
+                            throw new RuntimeException(e);
+                        }
+
+
+                        // Creating adapter for spinner
+                        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(PengajuanPinjamanActivity.this, android.R.layout.simple_spinner_item, categories);
+
+                        // Drop down layout style - list view with radio button
+                        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                        // attaching data adapter to spinner
+                        spinner.setAdapter(dataAdapter);
+
+                        String selection = "-- Pilih Tahun Pengajuan --";
+
+                        int spinnerPosition = dataAdapter.getPosition(selection);
+
+                        // on below line we are setting selection for our spinner to spinner position.
+                        spinner.setSelection(spinnerPosition);
+
+
+                    }
+
+                    @Override
+                    public void onError(String result) {
+                        Toast.makeText(PengajuanPinjamanActivity.this, "Error " + result , Toast.LENGTH_SHORT).show();
+
+//
+//                        Intent intent = new Intent(MutasiSaldoActivity.this, MainActivity.class);
+//                        startActivity(intent);
+//                        finish();
+
+                    }
+                });
+
+
+
         TextInputEditText jml_pengjuan_pinjaman = findViewById(R.id.textInputEditText2);
         jml_pengjuan_pinjaman.setInputType(InputType.TYPE_CLASS_NUMBER);
+//
 
+//        TextInputEditText jngka_waktu_pinjaman = findViewById(R.id.textInputEditText3);
+//        jngka_waktu_pinjaman.setInputType(InputType.TYPE_CLASS_NUMBER);
 
-        TextInputEditText jngka_waktu_pinjaman = findViewById(R.id.textInputEditText3);
-        jngka_waktu_pinjaman.setInputType(InputType.TYPE_CLASS_NUMBER);
-
-
+//
         Button batal = findViewById(R.id.button4);
         batal.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+//                Toast.makeText(PengajuanPinjamanActivity.this, String.valueOf(spinner.getSelectedItem()), Toast.LENGTH_SHORT).show();
 
                 Intent intent = new Intent(PengajuanPinjamanActivity.this, MainActivity.class);
                 startActivity(intent);
@@ -56,14 +134,14 @@ public class PengajuanPinjamanActivity extends AppCompatActivity {
             }
         });
 
-
+//
         Button kirim = findViewById(R.id.button5);
         kirim.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
                 String text1 = jml_pengjuan_pinjaman.getText().toString();
-                String text2 = jngka_waktu_pinjaman.getText().toString();
+                String text2 = String.valueOf(spinner.getSelectedItem());
 
                 String[] dataX = new String[3];
                 dataX[0] = id_user;
@@ -98,11 +176,25 @@ public class PengajuanPinjamanActivity extends AppCompatActivity {
 
             }
         });
+
+
+
+
     }
 
 
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+        // On selecting a spinner item
+        String item = parent.getItemAtPosition(position).toString();
 
+        // Showing selected spinner item
+//        Toast.makeText(parent.getContext(), "Selected: " + item, Toast.LENGTH_LONG).show();
+    }
 
+    @Override
+    public void onNothingSelected(AdapterView<?> parent) {
+        // TODO Auto-generated method stub
 
-
+    }
 }

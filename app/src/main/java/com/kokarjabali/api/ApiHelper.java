@@ -545,6 +545,92 @@ public class ApiHelper {
 
 
 
+
+    public void JANGKAWAKTU_GET(Context context, String url, final ApiHelper.VolleyCallback callback) {
+
+
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+
+                        try {
+                            JSONArray jsonarray = new JSONArray(response);
+
+                            String[] newrespon = new String[20];
+//                         newrespon[0] = jsonObject.getString("id");
+                            newrespon[1] = String.valueOf(jsonarray);
+
+                            callback.onSuccess(newrespon );
+
+//
+//                            if (jsonarray.length() == 0) {
+//                                String[] newrespon = new String[14];
+//                                newrespon[12] = "0";
+//                                callback.onSuccess(newrespon );
+//                            }else{
+//                                for(int i=0; i < jsonarray.length();i++) {
+//                                    if (i == (jsonarray.length()-1)) {
+//                                        JSONObject jsonObject = new JSONObject(jsonarray.getString(i));
+//
+//
+//                                    }
+//                                }
+//                            }
+
+
+                        } catch (JSONException e) {
+                            throw new RuntimeException(e);
+                        }
+
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+                // As of f605da3 the following should work
+                NetworkResponse response = error.networkResponse;
+                if (error instanceof ServerError && response != null) {
+                    try {
+                        String res = new String(response.data,
+                                HttpHeaderParser.parseCharset(response.headers, "utf-8"));
+                        // Now you can use any deserializer to make sense of data
+                        JSONObject obj = new JSONObject(res);
+
+                        callback.onError(String.valueOf(obj.getString("message")));
+
+                    } catch (UnsupportedEncodingException e1) {
+                        // Couldn't properly decode data to string
+                        e1.printStackTrace();
+                    } catch (JSONException e2) {
+                        // returned data is not JSONObject?
+                        e2.printStackTrace();
+                    }
+                }
+
+
+
+//                if (error instanceof TimeoutError || error instanceof NoConnectionError) {
+//                    callback.onError("No Connection \n Connection time out error please try again.");
+//                } else if (error instanceof AuthFailureError) {
+//                    callback.onError("Connection error \n Authentication Failure connection error please try again.");
+//                } else if (error instanceof ServerError) {
+//                    callback.onError("Connection error \n Server Connection error please try again.");
+//                } else if (error instanceof NetworkError) {
+//                    callback.onError("Connection error \n Network Connection error please try again.");
+//                } else if (error instanceof ParseError) {
+//                    callback.onError("Connection error \n Network Connection error please try again.");
+//                }
+
+            }
+        });
+
+        RequestQueue requestQueue = Volley.newRequestQueue(context);
+        requestQueue.add(stringRequest);
+    }
+
+
+
     public interface VolleyCallback {
         void onSuccess(String[] result);
 
